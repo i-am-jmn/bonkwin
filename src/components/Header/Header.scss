@@ -1,0 +1,38 @@
+#header {
+  background-color: #283991;
+
+  > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    > .left {
+      > h1 {
+        font-size: 20pt;
+        font-weight: bold;
+        color: #fff;
+      }
+    }
+
+    > .right {
+      display: flex;
+      gap: 10px;
+
+      > a, button {
+        font-family: 'Inter', sans-serif;
+        display: block;
+        font-size: 12pt;
+        text-decoration: none;
+        color: #fff;
+        background: none;
+        border: none;
+        outline: none;
+
+        &.active {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

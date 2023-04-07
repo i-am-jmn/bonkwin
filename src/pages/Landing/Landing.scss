@@ -1,0 +1,12 @@
+.products {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  > div {
+    padding: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+  }
+}

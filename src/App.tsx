@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { Auth } from "./contexts/Auth";
+import Layout from "./components/Layout";
+import Landing from "./pages/Landing";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
-function App() {
+import "./App.scss";
+import { fetchUser } from "./utils/api";
+import Publish from "./pages/Publish";
+
+const App = () => {
+  const authState = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchUser().then((res) =>
+      res !== null ? authState[1](true) : authState[1](false)
+    );
+  }, [authState]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Auth.Provider value={authState}>
+      {authState[0] && (
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Landing />} />
+            <Route path="publish" element={<Publish />} />
+          </Route>
+        </Routes>
+      )}
+      {!authState[0] && (
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="" element={<SignIn />} />
+            <Route path="*" element={<SignIn />} />
+          </Route>
+        </Routes>
+      )}
+    </Auth.Provider>
   );
-}
+};
 
 export default App;
